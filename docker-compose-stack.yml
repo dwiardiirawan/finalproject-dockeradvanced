@@ -1,0 +1,100 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: dwiardiirawan/mysql-custom
+    restart: always
+    ports:
+      - 3306:3306
+    secrets:
+      - db_user
+      - db_password 
+      - db_root_password
+    environment:
+      MYSQL_DATABASE: dbkuasai
+      MYSQL_USER_FILE: /run/secrets/db_user
+      MYSQL_PASSWORD_FILE: /run/secrets/db_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - backend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  pma:
+    depends_on:
+      - mysql
+    image: dwiardiirawan/pma-custom
+    restart: always
+    ports:
+      - 8080:80
+    secrets:
+      - db_root_password
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+    volumes:
+      - pmadata:/etc/phpmyadmin
+    networks:
+      - backend
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure    
+  web:
+    depends_on:
+      - mysql
+    image: dwiardiirawan/web-custom
+    restart: always
+    ports:
+      - 9000:80
+    networks:
+      - backend
+      - frontend
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure    
+  proxy:
+    image: dwiardiirawan/proxy-custom
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - frontend
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  mysqldata:
+  pmadata:
+
+networks:
+  backend:
+  frontend:
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_root_password:
+    file: ./secrets/db_root_password.txt
