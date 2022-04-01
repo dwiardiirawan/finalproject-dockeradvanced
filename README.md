@@ -1,6 +1,6 @@
 # Final Project - Docker Advanced Class
 
-**Using Docker Compose**
+## **Using Docker Compose**
 
 1) Build Image
    * **mysql**  : `docker image build -f mysql.Dockerfile -t dwiardiirawan/mysql-custom .`
@@ -17,3 +17,9 @@
    `127.0.0.1 pma.domainsaya.local`
 4) restart your local machine
 5) run this command: `docker-compose up`
+6) open this url in your browser
+   * http://pma.domainsaya.local/
+   * http://www.domainsaya.local/
+
+## **Using Docker Stack Deploy**
+
