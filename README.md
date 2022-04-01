@@ -23,6 +23,12 @@
    * http://www.domainsaya.local/
       * Login as root. You can see the password in the /secrets/db_root_password.txt.
       * You will see, database with name "dbkuasai" has already created. Open users table. It should contains a newly created user record.
+7) do healthcheck, run this command: `docker container ls`
 
 ## **Using Docker Stack Deploy**
+**Notes:** <br />
+If you already done step (1) until (7), please run this command: `docker-compose down`
 
+8) run this command: `docker stack deploy -c docker-compose-stack.yml myweb-app`
+   * try again step (6) & (7)
+9) check that all services already up using this command: `docker stack services myweb-app`
