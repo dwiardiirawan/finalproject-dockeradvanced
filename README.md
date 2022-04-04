@@ -33,7 +33,7 @@ If you already done step (1) until (7), please run this command: `docker-compose
    * try again step (6) & (7)
 9) check that all services already up using this command: `docker stack services myweb-app`
 
-## **Deploy in Googgle Cloud Platform**
+## **Deploy in Google Cloud Platform**
 
 10) run git clone command to download this repository: `git clone https://github.com/dwiardiirawan/finalproject-dockeradvanced.git`
 11) create firewal: VPC Network > Firewall Create a firewall rule
