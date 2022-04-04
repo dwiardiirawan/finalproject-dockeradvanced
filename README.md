@@ -32,3 +32,13 @@ If you already done step (1) until (7), please run this command: `docker-compose
 8) run this command: `docker stack deploy -c docker-compose-stack.yml myweb-app`
    * try again step (6) & (7)
 9) check that all services already up using this command: `docker stack services myweb-app`
+
+## **Deploy in Googgle Cloud Platform**
+
+10) run git clone command to download this repository: `git clone https://github.com/dwiardiirawan/finalproject-dockeradvanced.git`
+11) create firewal: VPC Network > Firewall Create a firewall rule
+    * Protocols and ports > TCP > put value 8080, 9000 (since we are using those port for web and pma)
+13) go to Compute Enginer > VM Instance > Open SSH console in Your Docker Master Node and run this command: `docker stack deploy -c docker-compose-stack.yml myweb-app`
+14) From the VM Instances list, click the external IP of Your Docker Master Node
+    * For open the web application add port 9000, http://<gcp vm instance external ip>:9000
+    * For open the PHPMyAdmin application add port 8080, http://<gcp vm instance external ip>:8080
